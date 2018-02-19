@@ -48,7 +48,7 @@
                   <img src="profile.png" width="99" height="99">
                  </div>
                    <div id="mailbox">
-                        <form  action="form1.php" method="post">
+                        <form  action="form.php" method="post">
 
                        <input placeholder="Enter your id" type="text" name="name" style="width:270px; height:42px; border: solid 1px #c4c2c6; font-size:16px; padding-left:8px;"><br><br>   
                        <input placeholder="Enter your password" type="password" name="name" style="width:270px; height:42px; border: solid 1px #c4c2c6; font-size:16px; padding-left:8px;"> <br><br>
