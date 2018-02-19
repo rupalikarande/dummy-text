@@ -3,6 +3,8 @@
      /* background-image: url("bg4.jpg");  */
      /* background-color: black; */
 } 
+
+.error {color: #FF0000;}
 input[type=text], select {
     width: 80%;
     padding: 12px 20px;

@@ -10,6 +10,8 @@
     <body>
     <!-- database connection -->
     <?php
+    if (isset($_POST['add'])) 
+    {
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -17,13 +19,13 @@ $dbname = "dummy";
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
-
+echo"connected";
 // Check connection
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 //  if(isset($_POST['add']))
-// {
+
 // add data
 $name_a="";
 $phone="";
@@ -39,10 +41,7 @@ $email="";
  // prepare and bind
   $stmt = $conn->prepare("INSERT INTO textdemo (name,Phone_No,Address,City,Email) VALUES (?, ?,?,?,?)");
   $stmt->bind_param("sssss", $name_a,$phone,$Add,$city,$email);
-  // set parameters and execute
-   $stmt->execute();
-   
-   $result = mysqli_query($conn,$stmt);
+  $result = mysqli_query($conn,$stmt);
         if ($result) {
         echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
     }
@@ -50,21 +49,23 @@ $email="";
     {
         echo "<script type='text/javascript'>alert('failed!')</script>";
     }
+  // set parameters and execute
+   $stmt->execute();
+   
+   
 
   $stmt->close();
   
-  // }
-  
-  
-mysqli_close($conn);
-
+  mysqli_close($conn);
+  }
 ?>
 <!-- validation -->
 <?php
 // define variables and set to empty values
 $nameErr = $emailErr = $phoneErr= "";
 $name = $Email = $Phone_No = "";
-
+$value = " (+91)1231234567";
+  $cleared="";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["name"])) {
@@ -86,13 +87,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $emailErr = "Invalid email format"; 
     }
   }
+  
 
+  
    if(empty($_POST["Phone_No"])){
+      $phoneErr="phone-No: is required";
+     }
+   else{
+    $Phone_No = test_input($_POST["Phone_No"]);
+    // check if number is in well-formed
     $cleared = preg_replace('/^[0-9]/', '', $value);
     if (count($cleared)<10 || count($cleared)>14) {
-      echo 'Please enter a valid phone number';
-  }else{
-      echo "valid";
+     $phoneErr="Please enter a valid phoneno";
   }
     }
    
@@ -111,7 +117,7 @@ function test_input($data) {
                  <div class="row">
               <div class="col-sm-8">
                 <form action="" method="post">
-                   <b><input type="text" id="name" name="name" placeholder=" Name: ">
+                   <b><input type="text" id="name" name="name"  placeholder=" Name: ">
                    <span class="error">* <?php echo $nameErr;?></span><br><br>
                    <input type="text" id="Phone_No" name="Phone_No" placeholder=" Phone No: ">
                    <span class="error">* <?php echo $phoneErr;?></span><br><br>
@@ -134,14 +140,6 @@ function test_input($data) {
             </div>
           </div>
         <!-- </div> -->
-        <?php
-echo $name;
-echo "<br>";
-echo $Email;
-echo "<br>";
-echo $Phone_No;
-echo "<br>";
-
-?>
+        
     </body>
 </html>
