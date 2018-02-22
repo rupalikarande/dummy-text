@@ -59,7 +59,7 @@ $email="";
   mysqli_close($conn);
   if (isset($_post['View Database'])) 
   {
-   header('location:ee.php');
+   header('location:view.php');
    
  }
 ?>
